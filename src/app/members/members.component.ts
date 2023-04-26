@@ -9,12 +9,13 @@ import { MEMBERS } from '../mock-members';
 })
 export class MembersComponent implements OnInit {
   members = MEMBERS;
-  member: Member = {
-    id: 1,
-    name: '田中太郎',
-  };
+  selectedMember: Member;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  onSelect(member: Member): void {
+    this.selectedMember = member;
+  }
 }

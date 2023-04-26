@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Member } from '../member';
 
 @Component({
   selector: 'app-members',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./members.component.css'],
 })
 export class MembersComponent implements OnInit {
-  member = '田中太郎';
+  member: Member = {
+    id: 1,
+    name: '田中太郎',
+  };
 
   constructor() {}
 

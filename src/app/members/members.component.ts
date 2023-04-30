@@ -21,7 +21,9 @@ export class MembersComponent implements OnInit {
 
   // MemberService で定義した getMembers() 関数をここで実行している
   getMembers(): void {
-    this.members = this.memberService.getMembers();
+    this.memberService
+      .getMembers()
+      .subscribe((members) => (this.members = members)); // subscribe：Observable.subscribe で、Observableオブジェクトを受け取るための関数
   }
 
   onSelect(member: Member): void {

@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MembersComponent } from './members/members.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 // prettier-ignore
 const routes: Routes = [
-  {path: 'members', component: MembersComponent}
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // pathMatch: 'full' は パスの完全一致
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'members', component: MembersComponent }
 ]
 
 @NgModule({

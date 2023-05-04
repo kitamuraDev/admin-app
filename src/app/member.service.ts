@@ -17,4 +17,13 @@ export class MemberService {
     // of：実行時に渡した値を Observable オブジェクトに変換して返す関数
     return of(MEMBERS);
   }
+
+  // id を受け取りそのメンバーを返す関数
+  getMember(id: number): Observable<Member> {
+    this.messageService.add(
+      `MemberService: 社員データ（id=${id}）を取得しました`
+    );
+
+    return of(MEMBERS.find((member) => member.id === id));
+  }
 }

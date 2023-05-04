@@ -25,8 +25,13 @@ export class MemberSearchComponent implements OnInit {
   // searchTerms の変更を監視して変更の都度 .pipe() の中身を実行
   ngOnInit(): void {
     this.members$ = this.searchTerms.pipe(
+      // キーボード入力の後、300ms 待ってから次の実行へ移る
       debounceTime(300),
+
+      // 直前のデータと同じ場合は、処理を実行しない
       distinctUntilChanged(),
+
+      // 検索キーワードを受け取る度に、新しい Observable を返す
       switchMap((term: string) => this.memberService.searchMember(term))
     );
   }

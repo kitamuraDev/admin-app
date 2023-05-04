@@ -10,13 +10,9 @@ import { MessageService } from '../message.service';
 })
 export class MembersComponent implements OnInit {
   members: Member[];
-  selectedMember: Member;
 
   // DI：Angularでは、serviceなどをコンポーネントで使用する際にDIをやる
-  constructor(
-    private memberService: MemberService,
-    private messageService: MessageService
-  ) {}
+  constructor(private memberService: MemberService) {}
 
   // コンポーネントが初期化されるタイミングで実行される（ReactのuseEffectのような役割）
   ngOnInit(): void {
@@ -28,12 +24,5 @@ export class MembersComponent implements OnInit {
     this.memberService
       .getMembers()
       .subscribe((members) => (this.members = members)); // subscribe：Observable.subscribe で、Observableオブジェクトを受け取るための関数
-  }
-
-  onSelect(member: Member): void {
-    this.selectedMember = member;
-    this.messageService.add(
-      `MembersComponent: 社員データ（id=${member.id}）が選択されました`
-    );
   }
 }

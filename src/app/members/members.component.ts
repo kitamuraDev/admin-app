@@ -25,4 +25,14 @@ export class MembersComponent implements OnInit {
       .getMembers()
       .subscribe((members) => (this.members = members)); // subscribe：Observable.subscribe で、Observableオブジェクトを受け取るための関数
   }
+
+  // メンバーの追加
+  add(name: string): void {
+    name = name.trim(); // 左右の空白文字を削除
+    if (!name) return;
+
+    this.memberService.addMember({ name } as Member).subscribe((member) => {
+      this.members.push(member);
+    });
+  }
 }

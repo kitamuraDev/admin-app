@@ -48,6 +48,16 @@ export class MemberService {
     );
   }
 
+  addMember(member: Member): Observable<Member> {
+    return this.httpClient
+      .post<Member>(this.membersUrl, member, this.httpOptios)
+      .pipe(
+        // prettier-ignore
+        tap((newMember: Member) => this.log(`社員データ（id=${newMember.id}）を追加しました`)),
+        catchError(this.handleError<Member>('addMember'))
+      );
+  }
+
   private log(message: string): void {
     this.messageService.add(`MemberService: ${message}`);
   }

@@ -35,4 +35,10 @@ export class MembersComponent implements OnInit {
       this.members.push(member);
     });
   }
+
+  // メンバーの削除
+  delete(member: Member): void {
+    this.members = this.members.filter((mem) => mem !== member); // DB と this.members の整合性を合わせる
+    this.memberService.deleteMember(member).subscribe();
+  }
 }

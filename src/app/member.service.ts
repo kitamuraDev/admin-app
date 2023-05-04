@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -13,6 +13,9 @@ import { MessageService } from './message.service';
 export class MemberService {
   // InMemoryDbService.createDb が返すオブジェクトがエンドポイント（ return { members } の場合、エンドポイントは `api/members` になる ）
   private membersUrl = 'api/members';
+  httpOptios = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(
     private httpClient: HttpClient,
@@ -30,11 +33,19 @@ export class MemberService {
 
   // id を受け取りそのメンバーを返す関数
   getMember(id: number): Observable<Member> {
-    this.messageService.add(
-      `MemberService: 社員データ（id=${id}）を取得しました`
+    const url = `${this.membersUrl}/${id};`;
+    return this.httpClient.get<Member>(url).pipe(
+      tap((_) => this.log(`社員データ（id=${id}）を取得しました`)),
+      catchError(this.handleError<Member>(`getMember id=${id}`))
     );
+  }
 
-    return of(MEMBERS.find((member) => member.id === id));
+  // メンバーを更新する関数
+  updateMember(member: Member): Observable<any> {
+    return this.httpClient.put(this.membersUrl, member, this.httpOptios).pipe(
+      tap((_) => this.log(`社員データ（id=${member.id}）を変更しました`)),
+      catchError(this.handleError<any>('updateMember'))
+    );
   }
 
   private log(message: string): void {
